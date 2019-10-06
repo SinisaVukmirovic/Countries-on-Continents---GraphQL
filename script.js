@@ -36,10 +36,22 @@ continentSelect.addEventListener('change', async e => {
         }
         else {
             console.log(country);
+            
             const element = document.createElement('div');
+            element.classList.add('country-elem');
+            const language = document.createElement('div');
+            language.classList.add('language-elem');
     
             element.innerText = country.name;
-    
+
+            if (country.languages.length === 0) {
+                language.innerHTML = `<span>Native Language: undefined</span>`;
+            }
+            else {
+                language.innerHTML = `<span>Native Language: </span>${country.languages[0].native}`;
+            }
+            
+            element.append(language);
             countriesList.append(element);
         }
     });
@@ -51,6 +63,9 @@ function getContinentCountries(continentCode) {
             continent(code: $code) {
                 countries {
                     name
+                    languages {
+                        native
+                    }
                 }
             }
         }
